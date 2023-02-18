@@ -31,7 +31,12 @@ namespace KitchenSimulator.Core
             inputVector = inputVector.normalized;
 
             var moveDirection = new Vector3(inputVector.x, 0f, inputVector.y);
-            this.transform.position += moveDirection * (_moveSpeed * Time.deltaTime);
+            var thisTransform = transform;
+            
+            thisTransform.position += moveDirection * (_moveSpeed * Time.deltaTime);
+
+            var rotateSpeed = 10f;
+            thisTransform.forward = Vector3.Slerp(thisTransform.forward, moveDirection,  rotateSpeed * Time.deltaTime);
             
             Debug.Log($"{inputVector}");
         }
