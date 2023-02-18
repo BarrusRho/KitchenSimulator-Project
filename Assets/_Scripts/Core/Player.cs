@@ -7,6 +7,8 @@ namespace KitchenSimulator.Core
         [SerializeField] private float _moveSpeed;
         public float MoveSpeed => _moveSpeed;
 
+        private bool _iswalking;
+
         private void Update()
         {
             var inputVector = new Vector2(0, 0);
@@ -34,11 +36,17 @@ namespace KitchenSimulator.Core
             var thisTransform = transform;
             
             thisTransform.position += moveDirection * (_moveSpeed * Time.deltaTime);
+            _iswalking = moveDirection != Vector3.zero;
 
             var rotateSpeed = 10f;
             thisTransform.forward = Vector3.Slerp(thisTransform.forward, moveDirection,  rotateSpeed * Time.deltaTime);
             
             Debug.Log($"{inputVector}");
+        }
+
+        public bool IsWalking()
+        {
+            return _iswalking;
         }
     }
 }
