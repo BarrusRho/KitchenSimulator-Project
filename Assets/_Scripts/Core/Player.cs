@@ -9,8 +9,10 @@ namespace KitchenSimulator.Core
         [SerializeField] private InputManager _inputManager;
 
         [SerializeField] private float _moveSpeed;
+        [SerializeField] private LayerMask _countersLayermask;
         public float MoveSpeed => _moveSpeed;
 
+        private Vector3 _lastInteractDirection;
         private bool _isWalking;
 
         private void Awake()
@@ -19,6 +21,12 @@ namespace KitchenSimulator.Core
         }
 
         private void Update()
+        {
+            HandleMovement();
+            HandleInteractions();
+        }
+
+        private void HandleMovement()
         {
             var inputVector = _inputManager.GetMovementVectorNormalized();
             var moveDirection = new Vector3(inputVector.x, 0f, inputVector.y);
@@ -50,10 +58,6 @@ namespace KitchenSimulator.Core
                 {
                     moveDirection = moveDirectionX;
                 }
-                else
-                {
-                    
-                }
             }
 
             if (canMove)
@@ -65,6 +69,27 @@ namespace KitchenSimulator.Core
 
             var rotateSpeed = 10f;
             thisTransform.forward = Vector3.Slerp(thisTransform.forward, moveDirection, rotateSpeed * Time.deltaTime);
+        }
+
+        private void HandleInteractions()
+        {
+            var inputVector = _inputManager.GetMovementVectorNormalized();
+            var moveDirection = new Vector3(inputVector.x, 0f, inputVector.y);
+
+            if (moveDirection != Vector3.zero)
+            {
+                _lastInteractDirection = moveDirection;
+            }
+            
+            var interactDistance = 2f;
+
+            if (Physics.Raycast(transform.position, _lastInteractDirection, out var raycastHit, interactDistance, _countersLayermask))
+            {
+                if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+                {
+                    clearCounter.Interact();
+                }
+            }
         }
 
         public bool IsWalking()
