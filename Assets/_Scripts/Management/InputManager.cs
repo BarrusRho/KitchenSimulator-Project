@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace KitchenSimulator.Management
 {
     public class InputManager : MonoBehaviour
     {
         private PlayerInputActions _playerInputActions;
+
+        public event EventHandler OnInteractAction;
         
         private void Awake()
         {
@@ -16,6 +19,12 @@ namespace KitchenSimulator.Management
         {
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Player.Enable();
+            _playerInputActions.Player.Interact.performed += OnInteractPerformed;
+        }
+
+        private void OnInteractPerformed(InputAction.CallbackContext callbackContext)
+        {
+            OnInteractAction?.Invoke(this, EventArgs.Empty);
         }
         
         public Vector2 GetMovementVectorNormalized()
