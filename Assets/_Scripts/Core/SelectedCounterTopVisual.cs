@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace KitchenSimulator.Core
 {
-    public class SelectedCounterVisual : MonoBehaviour
+    public class SelectedCounterTopVisual : MonoBehaviour
     {
-        [SerializeField] private ClearCounter _clearCounter;
-        [SerializeField] private GameObject _clearCounterVisual;
+        [SerializeField] private ClearCounterTop clearCounterTop;
+        [SerializeField] private GameObject _clearCounterTopVisual;
         private void Start()
         {
             Player.Instance.OnSelectedCounterChanged += OnSelectedCounterChanged;
@@ -14,7 +15,7 @@ namespace KitchenSimulator.Core
 
         private void OnSelectedCounterChanged(object sender, Player.OnSelectedCounterChangedEventArgs eventArgs)
         {
-            if (eventArgs.selectedCounter == _clearCounter)
+            if (eventArgs.SelectedCounterTop == clearCounterTop)
             {
                 Show();
             }
@@ -27,12 +28,12 @@ namespace KitchenSimulator.Core
 
         private void Show()
         {
-            _clearCounterVisual.SetActive(true);
+            _clearCounterTopVisual.SetActive(true);
         }
 
         private void Hide()
         {
-            _clearCounterVisual.SetActive(false);
+            _clearCounterTopVisual.SetActive(false);
         }
     }
 }

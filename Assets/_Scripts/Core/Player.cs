@@ -14,14 +14,14 @@ namespace KitchenSimulator.Core
         [SerializeField] private LayerMask _countersLayermask;
         private Vector3 _lastInteractDirection;
         private bool _isWalking;
-        private ClearCounter _selectedCounter;
+        private ClearCounterTop _selectedCounterTop;
 
         public float MoveSpeed => _moveSpeed;
         
         public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
         public class OnSelectedCounterChangedEventArgs : EventArgs
         {
-            public ClearCounter selectedCounter;
+            public ClearCounterTop SelectedCounterTop;
         }
 
         private void Awake()
@@ -48,9 +48,9 @@ namespace KitchenSimulator.Core
 
         private void OnInteractPerformed(object sender, EventArgs eventArguments)
         {
-            if (_selectedCounter != null)
+            if (_selectedCounterTop != null)
             {
-                _selectedCounter.Interact();
+                _selectedCounterTop.Interact();
             }
         }
 
@@ -114,9 +114,9 @@ namespace KitchenSimulator.Core
             if (Physics.Raycast(transform.position, _lastInteractDirection, out var raycastHit, interactDistance,
                     _countersLayermask))
             {
-                if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+                if (raycastHit.transform.TryGetComponent(out ClearCounterTop clearCounter))
                 {
-                    if (clearCounter != _selectedCounter)
+                    if (clearCounter != _selectedCounterTop)
                     {
                         SetSelectedCounter(clearCounter);
                     }
@@ -132,12 +132,12 @@ namespace KitchenSimulator.Core
             }
         }
 
-        private void SetSelectedCounter(ClearCounter selectedCounter)
+        private void SetSelectedCounter(ClearCounterTop selectedCounterTop)
         {
-            this._selectedCounter = selectedCounter;
+            this._selectedCounterTop = selectedCounterTop;
             OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs()
             {
-                selectedCounter = _selectedCounter
+                SelectedCounterTop = _selectedCounterTop
             });
         }
 

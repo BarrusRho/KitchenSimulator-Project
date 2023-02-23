@@ -426,6 +426,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClearCounterTop (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2441408518583994613, guid: ab9b6240e940de0478d6283f57606887,
+        type: 3}
+      propertyPath: _ingredientSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 2d1da5219a88d8c48a935b391f7d9dd9,
+        type: 2}
+    - target: {fileID: 2441408518583994613, guid: ab9b6240e940de0478d6283f57606887,
+        type: 3}
+      propertyPath: _tomatoPrefab
+      value: 
+      objectReference: {fileID: 5783844959363271099, guid: a734cfe2355575345add92f4ff6ffcad,
+        type: 3}
+    - target: {fileID: 2441408518583994613, guid: ab9b6240e940de0478d6283f57606887,
+        type: 3}
+      propertyPath: _kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 41f32b8c50c05f54abd67830931cc3e2,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab9b6240e940de0478d6283f57606887, type: 3}
 --- !u!1 &315428428
@@ -1156,5 +1174,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClearCounterTop
       objectReference: {fileID: 0}
+    - target: {fileID: 2441408518583994613, guid: ab9b6240e940de0478d6283f57606887,
+        type: 3}
+      propertyPath: _ingredientSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 41f32b8c50c05f54abd67830931cc3e2,
+        type: 2}
+    - target: {fileID: 2441408518583994613, guid: ab9b6240e940de0478d6283f57606887,
+        type: 3}
+      propertyPath: _kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 41f32b8c50c05f54abd67830931cc3e2,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab9b6240e940de0478d6283f57606887, type: 3}
