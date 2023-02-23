@@ -32,6 +32,7 @@ Transform:
   m_Children:
   - {fileID: 3471211463045928711}
   - {fileID: 8472459593263330133}
+  - {fileID: 5580960916646278034}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -60,6 +61,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8849b5a0bef7a3048ab89b94c0e86ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _counterTopSpawnPoint: {fileID: 5580960916646278034}
+  _ingredientSo: {fileID: 11400000, guid: 41f32b8c50c05f54abd67830931cc3e2, type: 2}
+--- !u!1 &7586922464503462716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5580960916646278034}
+  m_Layer: 6
+  m_Name: CounterTopSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5580960916646278034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7586922464503462716}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1125279131692155146}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1125279133315675052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -263,8 +297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afd6361c04d20b47b4212e3c0c433fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clearCounter: {fileID: 2441408518583994613}
-  _clearCounterVisual: {fileID: 4605548625742763185}
+  clearCounterTop: {fileID: 2441408518583994613}
+  _clearCounterTopVisual: {fileID: 4605548625742763185}
 --- !u!4 &8472459593263330133 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4589716710238282923, guid: 0004cb1e11ad014419b943c7da960724,
