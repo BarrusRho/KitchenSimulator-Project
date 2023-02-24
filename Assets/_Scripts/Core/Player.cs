@@ -15,7 +15,7 @@ namespace KitchenSimulator.Core
         [SerializeField] private LayerMask _countersLayermask;
         private Vector3 _lastInteractDirection;
         private bool _isWalking;
-        private ClearCounterTop _selectedCounterTop;
+        private CounterTopBase _selectedCounterTop;
         [SerializeField] private Transform _ingredientHoldPoint;
         private Ingredient _ingredient;
 
@@ -25,7 +25,7 @@ namespace KitchenSimulator.Core
 
         public class OnSelectedCounterChangedEventArgs : EventArgs
         {
-            public ClearCounterTop SelectedCounterTop;
+            public CounterTopBase SelectedCounterTop;
         }
 
         private void Awake()
@@ -118,11 +118,11 @@ namespace KitchenSimulator.Core
             if (Physics.Raycast(transform.position, _lastInteractDirection, out var raycastHit, interactDistance,
                     _countersLayermask))
             {
-                if (raycastHit.transform.TryGetComponent(out ClearCounterTop clearCounter))
+                if (raycastHit.transform.TryGetComponent(out CounterTopBase counterTopBase))
                 {
-                    if (clearCounter != _selectedCounterTop)
+                    if (counterTopBase != _selectedCounterTop)
                     {
-                        SetSelectedCounter(clearCounter);
+                        SetSelectedCounter(counterTopBase);
                     }
                 }
                 else
@@ -136,7 +136,7 @@ namespace KitchenSimulator.Core
             }
         }
 
-        private void SetSelectedCounter(ClearCounterTop selectedCounterTop)
+        private void SetSelectedCounter(CounterTopBase selectedCounterTop)
         {
             this._selectedCounterTop = selectedCounterTop;
             OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs()
