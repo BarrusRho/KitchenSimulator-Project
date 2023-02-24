@@ -4,22 +4,22 @@ using UnityEngine.Serialization;
 
 namespace KitchenSimulator.Core
 {
-    public class ClearCounterTop : MonoBehaviour
+    public class ClearCounterTop : MonoBehaviour, IIngredientParent
     {
         [SerializeField] private Transform _counterTopSpawnPoint;
         [SerializeField] private IngredientSO _ingredientSo;
         private Ingredient _ingredient;
 
-        public void Interact()
+        public void Interact(Player player)
         {
             if (_ingredient == null)
             {
                 var ingredientTransform = Instantiate(_ingredientSo.ingredientPrefab, _counterTopSpawnPoint);
-                ingredientTransform.GetComponent<Ingredient>().SetClearCounterTop(this);
+                ingredientTransform.GetComponent<Ingredient>().SetIngredientParent(this);
             }
             else
             {
-                Debug.Log(_ingredient.GetClearCounterTop());
+                _ingredient.SetIngredientParent(player);
             }
         }
 

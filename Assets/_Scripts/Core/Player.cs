@@ -1,10 +1,11 @@
 using System;
 using KitchenSimulator.Management;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace KitchenSimulator.Core
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IIngredientParent
     {
         public static Player Instance { get; private set; }
 
@@ -15,10 +16,13 @@ namespace KitchenSimulator.Core
         private Vector3 _lastInteractDirection;
         private bool _isWalking;
         private ClearCounterTop _selectedCounterTop;
+        [SerializeField] private Transform _ingredientHoldPoint;
+        private Ingredient _ingredient;
 
         public float MoveSpeed => _moveSpeed;
-        
+
         public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+
         public class OnSelectedCounterChangedEventArgs : EventArgs
         {
             public ClearCounterTop SelectedCounterTop;
@@ -50,7 +54,7 @@ namespace KitchenSimulator.Core
         {
             if (_selectedCounterTop != null)
             {
-                _selectedCounterTop.Interact();
+                _selectedCounterTop.Interact(this);
             }
         }
 
@@ -144,6 +148,31 @@ namespace KitchenSimulator.Core
         public bool IsWalking()
         {
             return _isWalking;
+        }
+
+        public Transform GetIngredientFollowTransform()
+        {
+            return _ingredientHoldPoint;
+        }
+
+        public void SetIngredient(Ingredient ingredient)
+        {
+            this._ingredient = ingredient;
+        }
+
+        public Ingredient GetIngredient()
+        {
+            return _ingredient;
+        }
+
+        public void ClearIngredient()
+        {
+            _ingredient = null;
+        }
+
+        public bool HasIngredient()
+        {
+            return _ingredient != null;
         }
     }
 }

@@ -6,34 +6,34 @@ namespace KitchenSimulator.Core
     public class Ingredient : MonoBehaviour
     {
         [SerializeField] private IngredientSO _ingredientSO;
-        private ClearCounterTop _clearCounterTop;
+        private IIngredientParent _ingredientParent;
 
         public IngredientSO GetIngredientSo()
         {
             return _ingredientSO;
         }
 
-        public void SetClearCounterTop(ClearCounterTop clearCounterTop)
+        public void SetIngredientParent(IIngredientParent ingredientParent)
         {
-            if (this._clearCounterTop !=null)
+            if (this._ingredientParent !=null)
             {
-                this._clearCounterTop.ClearIngredient();
+                this._ingredientParent.ClearIngredient();
             }
-            this._clearCounterTop = clearCounterTop;
+            this._ingredientParent = ingredientParent;
 
-            if (clearCounterTop.HasIngredient())
+            if (ingredientParent.HasIngredient())
             {
-                Debug.Log($"CounterTop already has an ingredient!");
+                Debug.Log($"IngredientParent already has an ingredient");
             }
-            clearCounterTop.SetIngredient(this);
+            ingredientParent.SetIngredient(this);
             
-            transform.parent = clearCounterTop.GetIngredientFollowTransform();
+            transform.parent = ingredientParent.GetIngredientFollowTransform();
             transform.localPosition = Vector3.zero;
         }
 
-        public ClearCounterTop GetClearCounterTop()
+        public IIngredientParent GetIngredientParent()
         {
-            return _clearCounterTop;
+            return _ingredientParent;
         }
     }
 }
