@@ -12,7 +12,7 @@ namespace KitchenSimulator.Core
 
         public override void Interact(Player player)
         {
-            if (!HasIngredient())
+            if (!player.HasIngredient())
             {
                 var ingredientTransform = Instantiate(_ingredientSo.ingredientPrefab);
                 ingredientTransform.GetComponent<Ingredient>().SetIngredientParent(player);

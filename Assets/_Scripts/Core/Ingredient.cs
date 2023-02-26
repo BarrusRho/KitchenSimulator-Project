@@ -15,18 +15,20 @@ namespace KitchenSimulator.Core
 
         public void SetIngredientParent(IIngredientParent ingredientParent)
         {
-            if (this._ingredientParent !=null)
+            if (this._ingredientParent != null)
             {
                 this._ingredientParent.ClearIngredient();
             }
+
             this._ingredientParent = ingredientParent;
 
             if (ingredientParent.HasIngredient())
             {
                 Debug.Log($"IngredientParent already has an ingredient");
             }
+
             ingredientParent.SetIngredient(this);
-            
+
             transform.parent = ingredientParent.GetIngredientFollowTransform();
             transform.localPosition = Vector3.zero;
         }
