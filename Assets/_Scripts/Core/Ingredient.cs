@@ -37,5 +37,19 @@ namespace KitchenSimulator.Core
         {
             return _ingredientParent;
         }
+
+        public void DestroySelf()
+        {
+            _ingredientParent.ClearIngredient();
+            Destroy(this.gameObject);
+        }
+
+        public static Ingredient SpawnIngredient(IngredientSO ingredientSO, IIngredientParent ingredientParent)
+        {
+            var ingredientTransform = Instantiate(ingredientSO.ingredientPrefab);
+            var ingredientObject = ingredientTransform.GetComponent<Ingredient>();
+            ingredientObject.SetIngredientParent(ingredientParent);
+            return ingredientObject;
+        }
     }
 }

@@ -9,6 +9,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 788005870660854140, guid: 9627032b9d53ce3428a807ad60d467c8,
         type: 3}
+      propertyPath: _ingredientSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 20c2f6fbf70514f4a94490cd00441240,
+        type: 2}
+    - target: {fileID: 788005870660854140, guid: 9627032b9d53ce3428a807ad60d467c8,
+        type: 3}
       propertyPath: _ingredientSo
       value: 
       objectReference: {fileID: 11400000, guid: 20c2f6fbf70514f4a94490cd00441240,

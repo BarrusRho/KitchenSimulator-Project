@@ -9,6 +9,7 @@ namespace KitchenSimulator.Management
         private PlayerInputActions _playerInputActions;
 
         public event EventHandler OnInteractAction;
+        public event EventHandler OnInteractAlternateAction;
         
         private void Awake()
         {
@@ -20,11 +21,17 @@ namespace KitchenSimulator.Management
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Player.Enable();
             _playerInputActions.Player.Interact.performed += OnInteractPerformed;
+            _playerInputActions.Player.InteractAlternate.performed += OnInteractAlternatePerformed;
         }
 
         private void OnInteractPerformed(InputAction.CallbackContext callbackContext)
         {
             OnInteractAction?.Invoke(this, EventArgs.Empty);
+        }
+        
+        private void OnInteractAlternatePerformed(InputAction.CallbackContext callbackContext)
+        {
+            OnInteractAlternateAction?.Invoke(this, EventArgs.Empty);
         }
         
         public Vector2 GetMovementVectorNormalized()

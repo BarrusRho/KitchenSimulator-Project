@@ -6,7 +6,7 @@ namespace KitchenSimulator.Core
 {
     public class ContainerCounterTop : CounterTopBase
     {
-        [SerializeField] private IngredientSO _ingredientSo;
+        [SerializeField] private IngredientSO _ingredientSO;
 
         public event EventHandler OnPlayerGrabbedIngredient;
 
@@ -14,8 +14,7 @@ namespace KitchenSimulator.Core
         {
             if (!player.HasIngredient())
             {
-                var ingredientTransform = Instantiate(_ingredientSo.ingredientPrefab);
-                ingredientTransform.GetComponent<Ingredient>().SetIngredientParent(player);
+                Ingredient.SpawnIngredient(_ingredientSO, player);
                 OnPlayerGrabbedIngredient?.Invoke(this, EventArgs.Empty);
             }
         }

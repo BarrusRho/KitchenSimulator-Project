@@ -42,6 +42,7 @@ namespace KitchenSimulator.Core
         private void Start()
         {
             _inputManager.OnInteractAction += OnInteractPerformed;
+            _inputManager.OnInteractAlternateAction += OnInteractAlternatePerformed;
         }
 
         private void Update()
@@ -55,6 +56,14 @@ namespace KitchenSimulator.Core
             if (_selectedCounterTop != null)
             {
                 _selectedCounterTop.Interact(this);
+            }
+        }
+        
+        private void OnInteractAlternatePerformed(object sender, EventArgs eventArguments)
+        {
+            if (_selectedCounterTop != null)
+            {
+                _selectedCounterTop.InteractAlternate(this);
             }
         }
 

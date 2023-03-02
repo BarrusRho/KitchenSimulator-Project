@@ -12,6 +12,11 @@ namespace KitchenSimulator.Core
         {
             
         }
+
+        public virtual void InteractAlternate(Player player)
+        {
+            
+        }
         
         public Transform GetIngredientFollowTransform()
         {
