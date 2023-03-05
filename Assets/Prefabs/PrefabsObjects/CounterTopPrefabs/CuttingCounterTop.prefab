@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 445696364340302504}
   - component: {fileID: 4019458820345642921}
   - component: {fileID: 8837197533112433524}
+  - component: {fileID: 5977055694637204533}
   m_Layer: 6
   m_Name: ProgressBarCanvas
   m_TagString: Untagged
@@ -301,6 +302,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cuttingCounterTop: {fileID: 5953020933559715474}
   _progressBarImage: {fileID: 2137426316066410342}
+--- !u!114 &5977055694637204533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7448660512670816098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875a0654ae813dd4d91cce486434aa50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraMode: 2
 --- !u!1001 &5792215432742740735
 PrefabInstance:
   m_ObjectHideFlags: 0
