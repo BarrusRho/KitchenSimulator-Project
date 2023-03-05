@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afd6361c04d20b47b4212e3c0c433fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  counterTopBase: {fileID: 0}
+  counterTopBase: {fileID: 9039277667855663184}
   _counterTopVisualArray:
   - {fileID: 4181104138292518777}
 --- !u!1001 &7246784822113782375
@@ -264,6 +264,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b69568e58f405cd4f98a445fd9028e6c, type: 3}
+--- !u!4 &4148159213784898874 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5580960916646278034, guid: b69568e58f405cd4f98a445fd9028e6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8422495128075349672}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8898969761057632162 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1125279131692155146, guid: b69568e58f405cd4f98a445fd9028e6c,
@@ -288,3 +294,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8100c7fa0bfb5174ab796750d827d1a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _counterTopSpawnPoint: {fileID: 4148159213784898874}
