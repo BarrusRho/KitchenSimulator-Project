@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace KitchenSimulator.Core
+namespace KitchenSimulator.CounterTops
 {
     public class ContainerCounterTopVisual : MonoBehaviour
     {

@@ -1,7 +1,7 @@
-using KitchenSimulator.ScriptableObjects;
+using KitchenSimulator.Core;
 using UnityEngine;
 
-namespace KitchenSimulator.Core
+namespace KitchenSimulator.CounterTops
 {
     public class CounterTopBase : MonoBehaviour, IIngredientParent
     {

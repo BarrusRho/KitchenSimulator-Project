@@ -1,8 +1,8 @@
+using KitchenSimulator.Core;
 using KitchenSimulator.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace KitchenSimulator.Core
+namespace KitchenSimulator.CounterTops
 {
     public class ClearCounterTop : CounterTopBase
     {

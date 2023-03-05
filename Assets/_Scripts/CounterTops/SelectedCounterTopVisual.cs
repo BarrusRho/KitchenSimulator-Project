@@ -1,8 +1,7 @@
-using System;
+using KitchenSimulator.Core;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace KitchenSimulator.Core
+namespace KitchenSimulator.CounterTops
 {
     public class SelectedCounterTopVisual : MonoBehaviour
     {

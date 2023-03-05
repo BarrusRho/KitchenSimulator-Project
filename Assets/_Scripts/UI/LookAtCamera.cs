@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace KitchenSimulator.UI
+namespace KitchenSimulator.Utility
 {
     public class LookAtCamera : MonoBehaviour
     {

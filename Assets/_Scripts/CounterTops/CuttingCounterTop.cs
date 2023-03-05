@@ -1,8 +1,9 @@
 using System;
+using KitchenSimulator.Core;
 using KitchenSimulator.ScriptableObjects;
 using UnityEngine;
 
-namespace KitchenSimulator.Core
+namespace KitchenSimulator.CounterTops
 {
     public class CuttingCounterTop : CounterTopBase
     {

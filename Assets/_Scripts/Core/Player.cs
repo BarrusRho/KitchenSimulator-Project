@@ -1,7 +1,7 @@
 using System;
+using KitchenSimulator.CounterTops;
 using KitchenSimulator.Management;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace KitchenSimulator.Core
 {
