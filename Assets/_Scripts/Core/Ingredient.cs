@@ -8,7 +8,7 @@ namespace KitchenSimulator.Core
         [SerializeField] private IngredientSO _ingredientSO;
         private IIngredientParent _ingredientParent;
 
-        public IngredientSO GetIngredientSo()
+        public IngredientSO GetIngredientSO()
         {
             return _ingredientSO;
         }
