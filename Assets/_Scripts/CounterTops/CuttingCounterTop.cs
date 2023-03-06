@@ -1,20 +1,17 @@
 using System;
 using KitchenSimulator.Core;
 using KitchenSimulator.ScriptableObjects;
+using KitchenSimulator.UI;
 using UnityEngine;
 
 namespace KitchenSimulator.CounterTops
 {
-    public class CuttingCounterTop : CounterTopBase
+    public class CuttingCounterTop : CounterTopBase, IHasProgress
     {
         [SerializeField] private CuttingRecipeSO[] _cuttingRecipeSOArray;
         private int _cuttingProgress;
 
-        public event EventHandler<OnCuttingProgressChangedEventArgs> OnCuttingProgressChanged;
-        public class OnCuttingProgressChangedEventArgs : EventArgs
-        {
-            public float cuttingProgressNormalized;
-        }
+        public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
 
         public event EventHandler OnCut;
 
@@ -30,9 +27,9 @@ namespace KitchenSimulator.CounterTops
                         _cuttingProgress = 0;
 
                         var cuttingRecipeSO = GetCuttingRecipe(GetIngredient().GetIngredientSO());
-                        OnCuttingProgressChanged?.Invoke(this, new OnCuttingProgressChangedEventArgs()
+                        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs()
                         {
-                            cuttingProgressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMaximum
+                            progressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMaximum
                         });
                     }
                 }
@@ -62,9 +59,9 @@ namespace KitchenSimulator.CounterTops
                 
                 var cuttingRecipeSO = GetCuttingRecipe(GetIngredient().GetIngredientSO());
                 
-                OnCuttingProgressChanged?.Invoke(this, new OnCuttingProgressChangedEventArgs()
+                OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs()
                 {
-                    cuttingProgressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMaximum
+                    progressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMaximum
                 });
                 
                 if (_cuttingProgress >= cuttingRecipeSO.cuttingProgressMaximum)

@@ -7,21 +7,29 @@ namespace KitchenSimulator.UI
 {
     public class ProgressBarUI : MonoBehaviour
     {
-        [SerializeField] private CuttingCounterTop _cuttingCounterTop;
+        [SerializeField] private GameObject _hasProgressGameObject;
         [SerializeField] private Image _progressBarImage;
+        private IHasProgress _objectHasProgress;
 
         private void Start()
         {
-            _cuttingCounterTop.OnCuttingProgressChanged += OnCuttingProgressChanged;
+            _objectHasProgress = _hasProgressGameObject.GetComponent<IHasProgress>();
+
+            if (_objectHasProgress == null)
+            {
+                Debug.LogError($"Game Object {_hasProgressGameObject} does not implement IHasProgress");
+            }
+            
+            _objectHasProgress.OnProgressChanged += OnProgressChanged;
             _progressBarImage.fillAmount = 0f;
             HideProgressBar();
         }
 
-        private void OnCuttingProgressChanged(object sender, CuttingCounterTop.OnCuttingProgressChangedEventArgs eventArgs)
+        private void OnProgressChanged(object sender, IHasProgress.OnProgressChangedEventArgs eventArgs)
         {
-            _progressBarImage.fillAmount = eventArgs.cuttingProgressNormalized;
+            _progressBarImage.fillAmount = eventArgs.progressNormalized;
 
-            if (eventArgs.cuttingProgressNormalized == 0f || eventArgs.cuttingProgressNormalized == 1f)
+            if (eventArgs.progressNormalized == 0f || eventArgs.progressNormalized == 1f)
             {
                 HideProgressBar();
             }

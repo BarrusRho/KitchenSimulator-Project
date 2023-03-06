@@ -1,20 +1,20 @@
 using System;
 using KitchenSimulator.Core;
 using KitchenSimulator.ScriptableObjects;
+using KitchenSimulator.UI;
 using UnityEngine;
 
 namespace KitchenSimulator.CounterTops
 {
-    public class StoveCounterTop : CounterTopBase
+    public class StoveCounterTop : CounterTopBase, IHasProgress
     {
-        private enum FryingState
+        public enum FryingState
         {
             Idle,
             Frying,
             Fried,
             Burned
         }
-
         private FryingState _fryingState;
 
         [SerializeField] private FryingRecipeSO[] _fryingRecipeSOArray;
@@ -23,6 +23,14 @@ namespace KitchenSimulator.CounterTops
         private BurningRecipeSO _burningRecipeSO;
         private float _fryingProgress;
         private float _burningProgress;
+        
+        public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
+
+        public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
+        public class OnStateChangedEventArgs : EventArgs
+        {
+            public FryingState fryingState;
+        }
 
         private void Start()
         {
@@ -39,6 +47,11 @@ namespace KitchenSimulator.CounterTops
                         break;
                     case FryingState.Frying:
                         _fryingProgress += Time.deltaTime;
+                        
+                        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs()
+                        {
+                            progressNormalized = _fryingProgress / _fryingRecipeSO.fryingProgressMaximum
+                        });
 
                         if (_fryingProgress > _fryingRecipeSO.fryingProgressMaximum)
                         {
@@ -47,23 +60,44 @@ namespace KitchenSimulator.CounterTops
                             _fryingState = FryingState.Fried;
                             _burningProgress = 0f;
                             _burningRecipeSO = GetBurningRecipe(GetIngredient().GetIngredientSO());
+                            
+                            OnStateChanged?.Invoke(this, new OnStateChangedEventArgs()
+                            {
+                                fryingState = _fryingState
+                            });
                         }
+
                         break;
                     case FryingState.Fried:
                         _burningProgress += Time.deltaTime;
+                        
+                        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs()
+                        {
+                            progressNormalized = _burningProgress / _burningRecipeSO.burningProgressMaximum
+                        });
 
                         if (_burningProgress > _burningRecipeSO.burningProgressMaximum)
                         {
                             GetIngredient().DestroySelf();
                             Ingredient.SpawnIngredient(_burningRecipeSO.outputIngredient, this);
                             _fryingState = FryingState.Burned;
+                            
+                            OnStateChanged?.Invoke(this, new OnStateChangedEventArgs()
+                            {
+                                fryingState = _fryingState
+                            });
+                            
+                            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs()
+                            {
+                                progressNormalized = 0f
+                            });
                         }
+
                         break;
                     case FryingState.Burned:
                         break;
                 }
             }
-            Debug.Log(_fryingState);
         }
 
         public override void Interact(Player player)
@@ -78,6 +112,16 @@ namespace KitchenSimulator.CounterTops
                         _fryingRecipeSO = GetFryingRecipe(GetIngredient().GetIngredientSO());
                         _fryingState = FryingState.Frying;
                         _fryingProgress = 0f;
+                        
+                        OnStateChanged?.Invoke(this, new OnStateChangedEventArgs()
+                        {
+                            fryingState = _fryingState
+                        });
+                        
+                        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs()
+                        {
+                            progressNormalized = _fryingProgress / _fryingRecipeSO.fryingProgressMaximum
+                        });
                     }
                 }
                 else
@@ -93,6 +137,16 @@ namespace KitchenSimulator.CounterTops
                 {
                     GetIngredient().SetIngredientParent(player);
                     _fryingState = FryingState.Idle;
+                    
+                    OnStateChanged?.Invoke(this, new OnStateChangedEventArgs()
+                    {
+                        fryingState = _fryingState
+                    });
+                    
+                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs()
+                    {
+                        progressNormalized = 0f
+                    });
                 }
             }
         }
@@ -129,7 +183,7 @@ namespace KitchenSimulator.CounterTops
 
             return null;
         }
-        
+
         private BurningRecipeSO GetBurningRecipe(IngredientSO inputIngredient)
         {
             foreach (var burningRecipeSO in _burningRecipeSOArray)
