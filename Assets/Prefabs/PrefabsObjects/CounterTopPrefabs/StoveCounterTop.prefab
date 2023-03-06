@@ -111,6 +111,8 @@ MonoBehaviour:
   _counterTopSpawnPoint: {fileID: 5465836775111548242}
   _fryingRecipeSOArray:
   - {fileID: 11400000, guid: c3c947ec18189794385e10fae3155157, type: 2}
+  _burningRecipeSOArray:
+  - {fileID: 11400000, guid: 9dd9cf99cda7db54dbb806fbe66d1d82, type: 2}
 --- !u!4 &5465836775111548242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5580960916646278034, guid: b69568e58f405cd4f98a445fd9028e6c,

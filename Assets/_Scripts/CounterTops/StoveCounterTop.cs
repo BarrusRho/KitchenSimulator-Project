@@ -7,25 +7,63 @@ namespace KitchenSimulator.CounterTops
 {
     public class StoveCounterTop : CounterTopBase
     {
+        private enum FryingState
+        {
+            Idle,
+            Frying,
+            Fried,
+            Burned
+        }
+
+        private FryingState _fryingState;
+
         [SerializeField] private FryingRecipeSO[] _fryingRecipeSOArray;
+        [SerializeField] private BurningRecipeSO[] _burningRecipeSOArray;
         private FryingRecipeSO _fryingRecipeSO;
+        private BurningRecipeSO _burningRecipeSO;
         private float _fryingProgress;
+        private float _burningProgress;
+
+        private void Start()
+        {
+            _fryingState = FryingState.Idle;
+        }
 
         private void Update()
         {
             if (HasIngredient())
             {
-                _fryingProgress += Time.deltaTime;
-
-                if (_fryingProgress > _fryingRecipeSO.fryingProgressMaximum)
+                switch (_fryingState)
                 {
-                    _fryingProgress = 0f;
-                    Debug.Log("Meat fried");
-                    GetIngredient().DestroySelf();
-                    Ingredient.SpawnIngredient(_fryingRecipeSO.outputIngredient, this);
+                    case FryingState.Idle:
+                        break;
+                    case FryingState.Frying:
+                        _fryingProgress += Time.deltaTime;
+
+                        if (_fryingProgress > _fryingRecipeSO.fryingProgressMaximum)
+                        {
+                            GetIngredient().DestroySelf();
+                            Ingredient.SpawnIngredient(_fryingRecipeSO.outputIngredient, this);
+                            _fryingState = FryingState.Fried;
+                            _burningProgress = 0f;
+                            _burningRecipeSO = GetBurningRecipe(GetIngredient().GetIngredientSO());
+                        }
+                        break;
+                    case FryingState.Fried:
+                        _burningProgress += Time.deltaTime;
+
+                        if (_burningProgress > _burningRecipeSO.burningProgressMaximum)
+                        {
+                            GetIngredient().DestroySelf();
+                            Ingredient.SpawnIngredient(_burningRecipeSO.outputIngredient, this);
+                            _fryingState = FryingState.Burned;
+                        }
+                        break;
+                    case FryingState.Burned:
+                        break;
                 }
             }
-            Debug.Log(_fryingProgress);
+            Debug.Log(_fryingState);
         }
 
         public override void Interact(Player player)
@@ -38,6 +76,8 @@ namespace KitchenSimulator.CounterTops
                     {
                         player.GetIngredient().SetIngredientParent(this);
                         _fryingRecipeSO = GetFryingRecipe(GetIngredient().GetIngredientSO());
+                        _fryingState = FryingState.Frying;
+                        _fryingProgress = 0f;
                     }
                 }
                 else
@@ -52,10 +92,11 @@ namespace KitchenSimulator.CounterTops
                 else
                 {
                     GetIngredient().SetIngredientParent(player);
+                    _fryingState = FryingState.Idle;
                 }
             }
         }
-        
+
         private bool HasValidRecipe(IngredientSO inputIngredient)
         {
             var fryingRecipeSO = GetFryingRecipe(inputIngredient);
@@ -83,6 +124,19 @@ namespace KitchenSimulator.CounterTops
                 if (fryingRecipeSO.inputIngredient == inputIngredient)
                 {
                     return fryingRecipeSO;
+                }
+            }
+
+            return null;
+        }
+        
+        private BurningRecipeSO GetBurningRecipe(IngredientSO inputIngredient)
+        {
+            foreach (var burningRecipeSO in _burningRecipeSOArray)
+            {
+                if (burningRecipeSO.inputIngredient == inputIngredient)
+                {
+                    return burningRecipeSO;
                 }
             }
 
