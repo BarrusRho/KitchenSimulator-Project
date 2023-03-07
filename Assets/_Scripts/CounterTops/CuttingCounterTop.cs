@@ -41,6 +41,14 @@ namespace KitchenSimulator.CounterTops
             {
                 if (player.HasIngredient())
                 {
+                    if (player.GetIngredient().TryGetPlate(out Plate plate))
+                    {
+                        if (plate.TryAddIngredientToPlate(GetIngredient().GetIngredientSO()))
+                        {
+                            GetIngredient().DestroySelf();
+                            
+                        }
+                    }
                 }
                 else
                 {

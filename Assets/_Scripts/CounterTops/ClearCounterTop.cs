@@ -1,5 +1,6 @@
 using KitchenSimulator.Core;
 using KitchenSimulator.ScriptableObjects;
+using UnityEditor;
 using UnityEngine;
 
 namespace KitchenSimulator.CounterTops
@@ -18,14 +19,29 @@ namespace KitchenSimulator.CounterTops
                 }
                 else
                 {
-                    
                 }
             }
             else
             {
                 if (player.HasIngredient())
                 {
-                    
+                    if (player.GetIngredient().TryGetPlate(out Plate plate))
+                    {
+                        if (plate.TryAddIngredientToPlate(GetIngredient().GetIngredientSO()))
+                        {
+                            GetIngredient().DestroySelf();
+                        }
+                    }
+                    else
+                    {
+                        if (GetIngredient().TryGetPlate(out plate))
+                        {
+                            if (plate.TryAddIngredientToPlate(player.GetIngredient().GetIngredientSO()))
+                            {
+                                player.GetIngredient().DestroySelf();
+                            }
+                        }
+                    }
                 }
                 else
                 {

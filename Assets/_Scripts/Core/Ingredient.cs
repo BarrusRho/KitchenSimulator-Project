@@ -43,6 +43,20 @@ namespace KitchenSimulator.Core
             _ingredientParent.ClearIngredient();
             Destroy(this.gameObject);
         }
+        
+        public bool TryGetPlate(out Plate plate)
+        {
+            if (this is Plate)
+            {
+                plate = this as Plate;
+                return true;
+            }
+            else
+            {
+                plate = null;
+                return false;
+            }
+        }
 
         public static Ingredient SpawnIngredient(IngredientSO ingredientSO, IIngredientParent ingredientParent)
         {

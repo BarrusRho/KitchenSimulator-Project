@@ -132,6 +132,25 @@ namespace KitchenSimulator.CounterTops
             {
                 if (player.HasIngredient())
                 {
+                    if (player.GetIngredient().TryGetPlate(out Plate plate))
+                    {
+                        if (plate.TryAddIngredientToPlate(GetIngredient().GetIngredientSO()))
+                        {
+                            GetIngredient().DestroySelf();
+                            
+                            _fryingState = FryingState.Idle;
+                    
+                            OnStateChanged?.Invoke(this, new OnStateChangedEventArgs()
+                            {
+                                fryingState = _fryingState
+                            });
+                    
+                            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs()
+                            {
+                                progressNormalized = 0f
+                            });
+                        }
+                    }
                 }
                 else
                 {
