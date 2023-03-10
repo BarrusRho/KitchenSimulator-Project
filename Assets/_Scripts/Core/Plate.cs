@@ -10,6 +10,13 @@ namespace KitchenSimulator.Core
         [SerializeField] private List<IngredientSO> _validIngredientsList;
         private List<IngredientSO> _ingredientSOList;
 
+        public event EventHandler<OnIngredientAddedEventArgs> OnIngredientAdded;
+
+        public class OnIngredientAddedEventArgs : EventArgs
+        {
+            public IngredientSO ingredientSO;
+        }
+
         private void Awake()
         {
             _ingredientSOList = new List<IngredientSO>();
@@ -29,6 +36,10 @@ namespace KitchenSimulator.Core
             else
             {
                 _ingredientSOList.Add(ingredient);
+                OnIngredientAdded?.Invoke(this, new OnIngredientAddedEventArgs()
+                {
+                    ingredientSO = ingredient
+                });
                 return true;
             }
         }
