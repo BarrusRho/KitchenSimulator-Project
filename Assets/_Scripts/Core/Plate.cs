@@ -43,5 +43,10 @@ namespace KitchenSimulator.Core
                 return true;
             }
         }
+
+        public List<IngredientSO> GetIngredientSOList()
+        {
+            return _ingredientSOList;
+        }
     }
 }
