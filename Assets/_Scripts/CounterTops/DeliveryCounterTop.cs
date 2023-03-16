@@ -1,5 +1,6 @@
 using KitchenSimulator.Core;
 using KitchenSimulator.CounterTops;
+using KitchenSimulator.Management;
 using UnityEngine;
 
 namespace KitchenSimulator.CounterTops
@@ -12,6 +13,7 @@ namespace KitchenSimulator.CounterTops
             {
                 if (player.GetIngredient().TryGetPlate(out Plate plate))
                 {
+                    DeliveryManager.Instance.DeliverRecipe(plate);
                     player.GetIngredient().DestroySelf();
                 }
             }
