@@ -19,6 +19,9 @@ namespace KitchenSimulator.Management
 
         private int _waitingRecipesMaximum = 4;
 
+        public event EventHandler OnRecipeSpawned;
+        public event EventHandler OnRecipeCompleted;
+
         private void Awake()
         {
             Instance = this;
@@ -42,8 +45,8 @@ namespace KitchenSimulator.Management
                 {
                     var randomRecipe = Random.Range(0, _recipeListSO.recipeSOList.Count);
                     var waitingRecipeSO = _recipeListSO.recipeSOList[randomRecipe];
-                    Debug.Log(waitingRecipeSO.recipeName);
                     _waitingRecipeSOList.Add(waitingRecipeSO);
+                    OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -79,14 +82,17 @@ namespace KitchenSimulator.Management
 
                     if (plateContentsMatchesRecipe)
                     {
-                        Debug.Log("This is the correct recipe");
                         _waitingRecipeSOList.RemoveAt(i);
+                        OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
                         return;
                     }
                 }
             }
+        }
 
-            Debug.Log("Not the correct recipe for delivery");
+        public List<RecipeSO> GetWaitingRecipeSOList()
+        {
+            return _waitingRecipeSOList;
         }
     }
 }
