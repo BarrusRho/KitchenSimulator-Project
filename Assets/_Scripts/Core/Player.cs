@@ -22,6 +22,7 @@ namespace KitchenSimulator.Core
         public float MoveSpeed => _moveSpeed;
 
         public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+        public event EventHandler OnPickedUpObject;
 
         public class OnSelectedCounterChangedEventArgs : EventArgs
         {
@@ -58,7 +59,7 @@ namespace KitchenSimulator.Core
                 _selectedCounterTop.Interact(this);
             }
         }
-        
+
         private void OnInteractAlternatePerformed(object sender, EventArgs eventArguments)
         {
             if (_selectedCounterTop != null)
@@ -93,13 +94,12 @@ namespace KitchenSimulator.Core
                     var moveDirectionZ = new Vector3(0, 0, moveDirection.z).normalized;
                     canMove = moveDirection.z != 0 && !Physics.CapsuleCast(thisPosition,
                         thisPosition + Vector3.up * playerHeight, playerRadius, moveDirectionZ, moveDistance);
-                    
+
                     if (canMove)
                     {
                         moveDirection = moveDirectionZ;
                     }
                 }
-
             }
 
             if (canMove)
@@ -168,6 +168,11 @@ namespace KitchenSimulator.Core
         public void SetIngredient(Ingredient ingredient)
         {
             this._ingredient = ingredient;
+
+            if (ingredient != null)
+            {
+                OnPickedUpObject?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         public Ingredient GetIngredient()

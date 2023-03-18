@@ -1,3 +1,4 @@
+using System;
 using KitchenSimulator.Core;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace KitchenSimulator.CounterTops
     {
         [SerializeField] private Transform _counterTopSpawnPoint;
         private Ingredient _ingredient;
+
+        public static event EventHandler OnAnyObjectDropped;
         
         public virtual void Interact(Player player)
         {
@@ -26,6 +29,11 @@ namespace KitchenSimulator.CounterTops
         public void SetIngredient(Ingredient ingredient)
         {
             this._ingredient = ingredient;
+
+            if (ingredient != null)
+            {
+                OnAnyObjectDropped?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         public Ingredient GetIngredient()

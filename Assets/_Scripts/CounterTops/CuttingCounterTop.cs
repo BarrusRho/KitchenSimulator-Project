@@ -14,6 +14,7 @@ namespace KitchenSimulator.CounterTops
         public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
 
         public event EventHandler OnCut;
+        public static event EventHandler OnAnyCut;
 
         public override void Interact(Player player)
         {
@@ -64,6 +65,7 @@ namespace KitchenSimulator.CounterTops
                 _cuttingProgress++;
                 
                 OnCut?.Invoke(this, EventArgs.Empty);
+                OnAnyCut?.Invoke(this, EventArgs.Empty);
                 
                 var cuttingRecipeSO = GetCuttingRecipe(GetIngredient().GetIngredientSO());
                 
