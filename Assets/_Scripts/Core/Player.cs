@@ -54,6 +54,11 @@ namespace KitchenSimulator.Core
 
         private void OnInteractPerformed(object sender, EventArgs eventArguments)
         {
+            if (!GameManager.Instance.IsGamePlaying())
+            {
+                return;
+            }
+            
             if (_selectedCounterTop != null)
             {
                 _selectedCounterTop.Interact(this);
@@ -62,6 +67,11 @@ namespace KitchenSimulator.Core
 
         private void OnInteractAlternatePerformed(object sender, EventArgs eventArguments)
         {
+            if (!GameManager.Instance.IsGamePlaying())
+            {
+                return;
+            }
+            
             if (_selectedCounterTop != null)
             {
                 _selectedCounterTop.InteractAlternate(this);
