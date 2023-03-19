@@ -18,7 +18,8 @@ namespace KitchenSimulator.Management
         private GameState _gameState;
         private float _waitingToStartTimer = 1f;
         private float _countdownToStartTimer = 3f;
-        private float _gamePlayingTimer = 10f;
+        private float _gamePlayingTimer;
+        private float _gamePlayingTimerMaximum = 10f;
 
         public event EventHandler OnStateChanged;
 
@@ -49,6 +50,7 @@ namespace KitchenSimulator.Management
                     if (_countdownToStartTimer < 0f)
                     {
                         _gameState = GameState.GamePlaying;
+                        _gamePlayingTimer = _gamePlayingTimerMaximum;
                         OnStateChanged?.Invoke(this, EventArgs.Empty);
                     }
                     
@@ -83,6 +85,16 @@ namespace KitchenSimulator.Management
         public float GetCountdownToStartTimer()
         {
             return _countdownToStartTimer;
+        }
+
+        public bool IsGameOver()
+        {
+            return _gameState == GameState.GameOver;
+        }
+
+        public float GetGamePlayingTimerNormalized()
+        {
+            return 1 - (_gamePlayingTimer / _gamePlayingTimerMaximum);
         }
     }
 }

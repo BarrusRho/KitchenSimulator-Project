@@ -18,6 +18,7 @@ namespace KitchenSimulator.Management
         private float _spawnRecipeTimerMaximum = 4f;
 
         private int _waitingRecipesMaximum = 4;
+        private int _deliveredRecipesAmount;
 
         public event EventHandler OnRecipeSpawned;
         public event EventHandler OnRecipeCompleted;
@@ -84,6 +85,7 @@ namespace KitchenSimulator.Management
 
                     if (plateContentsMatchesRecipe)
                     {
+                        _deliveredRecipesAmount++;
                         _waitingRecipeSOList.RemoveAt(i);
                         OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
                         OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
@@ -98,6 +100,11 @@ namespace KitchenSimulator.Management
         public List<RecipeSO> GetWaitingRecipeSOList()
         {
             return _waitingRecipeSOList;
+        }
+
+        public int GetDeliveredRecipesAmount()
+        {
+            return _deliveredRecipesAmount;
         }
     }
 }
