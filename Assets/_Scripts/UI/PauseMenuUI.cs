@@ -12,6 +12,8 @@ namespace KitchenSimulator.UI
     {
         [SerializeField] private Button _resumeButton;
         [SerializeField] private Button _mainMenuButton;
+        [SerializeField] private Button _optionsMenuButton;
+        [SerializeField] private OptionsMenuUI _optionsMenuUI;
 
         private void Awake()
         {
@@ -23,6 +25,11 @@ namespace KitchenSimulator.UI
             _mainMenuButton.onClick.AddListener(() =>
             {
                 SceneLoader.LoadScene(SceneLoader.Scene.MainMenuScene);
+            });
+            
+            _optionsMenuButton.onClick.AddListener(() =>
+            {
+                _optionsMenuUI.ShowUI();
             });
         }
 
