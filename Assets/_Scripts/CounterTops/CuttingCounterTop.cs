@@ -15,6 +15,11 @@ namespace KitchenSimulator.CounterTops
 
         public event EventHandler OnCut;
         public static event EventHandler OnAnyCut;
+        
+        public new static void ResetStaticData()
+        {
+            OnAnyCut = null;
+        }
 
         public override void Interact(Player player)
         {

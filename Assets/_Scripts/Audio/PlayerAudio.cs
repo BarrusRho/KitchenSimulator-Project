@@ -13,6 +13,11 @@ namespace KitchenSimulator.Audio
         private float _footstepTimerMaximum = 0.1f;
 
         public static event EventHandler OnPlayerMovement;
+        
+        public static void ResetStaticData()
+        {
+            OnPlayerMovement = null;
+        }
 
         private void Awake()
         {

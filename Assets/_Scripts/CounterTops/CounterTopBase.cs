@@ -10,6 +10,10 @@ namespace KitchenSimulator.CounterTops
         private Ingredient _ingredient;
 
         public static event EventHandler OnAnyObjectDropped;
+        public static void ResetStaticData()
+        {
+            OnAnyObjectDropped = null;
+        }
         
         public virtual void Interact(Player player)
         {
