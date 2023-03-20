@@ -24,6 +24,8 @@ namespace KitchenSimulator.UI
             {
                 Application.Quit();
             });
+
+            Time.timeScale = 1f;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace KitchenSimulator.Management
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
-        
+
         private enum GameState
         {
             WaitingToStart,
@@ -20,14 +20,22 @@ namespace KitchenSimulator.Management
         private float _countdownToStartTimer = 3f;
         private float _gamePlayingTimer;
         private float _gamePlayingTimerMaximum = 10f;
+        private bool _isGamePaused = false;
 
         public event EventHandler OnStateChanged;
+        public event EventHandler OnGamePaused;
+        public event EventHandler OnGameResumed;
 
         private void Awake()
         {
             Instance = this;
-            
+
             _gameState = GameState.WaitingToStart;
+        }
+
+        private void Start()
+        {
+            InputManager.Instance.OnPauseAction += OnPauseAction;
         }
 
         private void Update()
@@ -42,7 +50,7 @@ namespace KitchenSimulator.Management
                         _gameState = GameState.CountdownToStart;
                         OnStateChanged?.Invoke(this, EventArgs.Empty);
                     }
-                    
+
                     break;
                 case GameState.CountdownToStart:
                     _countdownToStartTimer -= Time.deltaTime;
@@ -53,7 +61,7 @@ namespace KitchenSimulator.Management
                         _gamePlayingTimer = _gamePlayingTimerMaximum;
                         OnStateChanged?.Invoke(this, EventArgs.Empty);
                     }
-                    
+
                     break;
                 case GameState.GamePlaying:
                     _gamePlayingTimer -= Time.deltaTime;
@@ -63,12 +71,12 @@ namespace KitchenSimulator.Management
                         _gameState = GameState.GameOver;
                         OnStateChanged?.Invoke(this, EventArgs.Empty);
                     }
-                    
+
                     break;
                 case GameState.GameOver:
                     break;
             }
-            
+
             Debug.Log(_gameState);
         }
 
@@ -95,6 +103,27 @@ namespace KitchenSimulator.Management
         public float GetGamePlayingTimerNormalized()
         {
             return 1 - (_gamePlayingTimer / _gamePlayingTimerMaximum);
+        }
+
+        private void OnPauseAction(object sender, EventArgs eventArgs)
+        {
+            TogglePauseGame();
+        }
+
+        public void TogglePauseGame()
+        {
+            _isGamePaused = !_isGamePaused;
+
+            if (_isGamePaused)
+            {
+                Time.timeScale = 0f;
+                OnGamePaused?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                OnGameResumed?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }
