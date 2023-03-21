@@ -93,7 +93,7 @@ namespace KitchenSimulator.Core
             if (!canMove)
             {
                 var moveDirectionX = new Vector3(moveDirection.x, 0, 0).normalized;
-                canMove = moveDirection.x != 0 && !Physics.CapsuleCast(thisPosition,
+                canMove = (moveDirection.x < -0.5f || moveDirection.x > +0.5f) && !Physics.CapsuleCast(thisPosition,
                     thisPosition + Vector3.up * playerHeight, playerRadius, moveDirectionX, moveDistance);
                 if (canMove)
                 {
@@ -102,7 +102,7 @@ namespace KitchenSimulator.Core
                 else
                 {
                     var moveDirectionZ = new Vector3(0, 0, moveDirection.z).normalized;
-                    canMove = moveDirection.z != 0 && !Physics.CapsuleCast(thisPosition,
+                    canMove = (moveDirection.z < -0.5f || moveDirection.z > +0.5f) && !Physics.CapsuleCast(thisPosition,
                         thisPosition + Vector3.up * playerHeight, playerRadius, moveDirectionZ, moveDistance);
 
                     if (canMove)
