@@ -12,8 +12,23 @@ namespace KitchenSimulator.UI
         [SerializeField] private Button _soundEffectsButton;
         [SerializeField] private Button _musicButton;
         [SerializeField] private Button _closeButton;
+        [SerializeField] private Button _moveUpButton;
+        [SerializeField] private Button _moveDownButton;
+        [SerializeField] private Button _moveLeftButton;
+        [SerializeField] private Button _moveRightButton;
+        [SerializeField] private Button _interactButton;
+        [SerializeField] private Button _interactAlternateButton;
+        [SerializeField] private Button _pauseButton;
         [SerializeField] private TextMeshProUGUI _soundEffectsText;
         [SerializeField] private TextMeshProUGUI _musicText;
+        [SerializeField] private TextMeshProUGUI _moveUpButtonText;
+        [SerializeField] private TextMeshProUGUI _moveDownButtonText;
+        [SerializeField] private TextMeshProUGUI _moveLeftButtonText;
+        [SerializeField] private TextMeshProUGUI _moveRightButtonText;
+        [SerializeField] private TextMeshProUGUI _interactButtonText;
+        [SerializeField] private TextMeshProUGUI _interactAlternateButtonText;
+        [SerializeField] private TextMeshProUGUI _pauseButtonText;
+        [SerializeField] private Transform _rebindControlsPrompt;
 
         private void Awake()
         {
@@ -30,6 +45,41 @@ namespace KitchenSimulator.UI
             });
 
             _closeButton.onClick.AddListener(() => { HideUI(); });
+            
+            _moveUpButton.onClick.AddListener(() =>
+            {
+                RebindControls(InputManager.ControlBindings.MoveUp);
+            });
+            
+            _moveDownButton.onClick.AddListener(() =>
+            {
+                RebindControls(InputManager.ControlBindings.MoveDown);
+            });
+            
+            _moveLeftButton.onClick.AddListener(() =>
+            {
+                RebindControls(InputManager.ControlBindings.MoveLeft);
+            });
+            
+            _moveRightButton.onClick.AddListener(() =>
+            {
+                RebindControls(InputManager.ControlBindings.MoveRight);
+            });
+            
+            _interactButton.onClick.AddListener(() =>
+            {
+                RebindControls(InputManager.ControlBindings.Interact);
+            });
+            
+            _interactAlternateButton.onClick.AddListener(() =>
+            {
+                RebindControls(InputManager.ControlBindings.InteractAlternate);
+            });
+            
+            _pauseButton.onClick.AddListener(() =>
+            {
+                RebindControls(InputManager.ControlBindings.Pause);
+            });
         }
 
         private void Start()
@@ -37,6 +87,7 @@ namespace KitchenSimulator.UI
             UpdateOptionsMenuVisuals();
 
             HideUI();
+            HideRebindControlsPrompt();
 
             GameManager.Instance.OnGameResumed += OnGameResumed;
         }
@@ -48,6 +99,14 @@ namespace KitchenSimulator.UI
 
             var backgroundMusicVisual = Mathf.Round(AudioManager.Instance.GetBackgroundMusicVolume() * 10f);
             _musicText.text = $"Music: {backgroundMusicVisual}";
+
+            _moveUpButtonText.text = InputManager.Instance.GetControlBindingsText(InputManager.ControlBindings.MoveUp);
+            _moveDownButtonText.text = InputManager.Instance.GetControlBindingsText(InputManager.ControlBindings.MoveDown);
+            _moveLeftButtonText.text = InputManager.Instance.GetControlBindingsText(InputManager.ControlBindings.MoveLeft);
+            _moveRightButtonText.text = InputManager.Instance.GetControlBindingsText(InputManager.ControlBindings.MoveRight);
+            _interactButtonText.text = InputManager.Instance.GetControlBindingsText(InputManager.ControlBindings.Interact);
+            _interactAlternateButtonText.text = InputManager.Instance.GetControlBindingsText(InputManager.ControlBindings.InteractAlternate);
+            _pauseButtonText.text = InputManager.Instance.GetControlBindingsText(InputManager.ControlBindings.Pause);
         }
 
         public void ShowUI()
@@ -63,6 +122,26 @@ namespace KitchenSimulator.UI
         private void OnGameResumed(object sender, EventArgs eventArgs)
         {
             HideUI();
+        }
+
+        private void ShowRebindControlsPrompt()
+        {
+            _rebindControlsPrompt.gameObject.SetActive(true);
+        }
+        
+        private void HideRebindControlsPrompt()
+        {
+            _rebindControlsPrompt.gameObject.SetActive(false);
+        }
+
+        private void RebindControls(InputManager.ControlBindings controlBindings)
+        {
+            ShowRebindControlsPrompt();
+            InputManager.Instance.RebindControlBinding(controlBindings, ()=>
+            {
+                HideRebindControlsPrompt();
+                UpdateOptionsMenuVisuals();
+            });
         }
     }
 }
