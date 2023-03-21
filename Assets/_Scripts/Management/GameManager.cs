@@ -76,8 +76,6 @@ namespace KitchenSimulator.Management
                 case GameState.GameOver:
                     break;
             }
-
-            Debug.Log(_gameState);
         }
 
         public bool IsGamePlaying()
