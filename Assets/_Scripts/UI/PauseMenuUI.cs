@@ -29,7 +29,8 @@ namespace KitchenSimulator.UI
             
             _optionsMenuButton.onClick.AddListener(() =>
             {
-                _optionsMenuUI.ShowUI();
+                HideUI();
+                _optionsMenuUI.ShowUI(ShowUI);
             });
         }
 
@@ -54,6 +55,7 @@ namespace KitchenSimulator.UI
         private void ShowUI()
         {
             this.gameObject.SetActive(true);
+            _resumeButton.Select();
         }
 
         private void HideUI()

@@ -18,7 +18,10 @@ namespace KitchenSimulator.Management
             MoveRight,
             Interact,
             InteractAlternate,
-            Pause
+            Pause,
+            GamepadInteract,
+            GamepadInteractAlternate,
+            GamepadPause
         }
 
         public event EventHandler OnInteractAction;
@@ -100,6 +103,12 @@ namespace KitchenSimulator.Management
                     return _playerInputActions.Player.InteractAlternate.bindings[0].ToDisplayString();
                 case ControlBindings.Pause:
                     return _playerInputActions.Player.Pause.bindings[0].ToDisplayString();
+                case ControlBindings.GamepadInteract:
+                    return _playerInputActions.Player.Interact.bindings[1].ToDisplayString();
+                case ControlBindings.GamepadInteractAlternate:
+                    return _playerInputActions.Player.InteractAlternate.bindings[1].ToDisplayString();
+                case ControlBindings.GamepadPause:
+                    return _playerInputActions.Player.Pause.bindings[1].ToDisplayString();
             }
         }
 
@@ -140,6 +149,18 @@ namespace KitchenSimulator.Management
                 case ControlBindings.Pause:
                     inputAction = _playerInputActions.Player.Pause;
                     bindingIndex = 0;
+                    break;
+                case ControlBindings.GamepadInteract:
+                    inputAction = _playerInputActions.Player.Interact;
+                    bindingIndex = 1;
+                    break;
+                case ControlBindings.GamepadInteractAlternate:
+                    inputAction = _playerInputActions.Player.InteractAlternate;
+                    bindingIndex = 1;
+                    break;
+                case ControlBindings.GamepadPause:
+                    inputAction = _playerInputActions.Player.Pause;
+                    bindingIndex = 1;
                     break;
             }
 
