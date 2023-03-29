@@ -16,7 +16,7 @@ namespace KitchenSimulator.Management
         }
 
         private GameState _gameState;
-        private float _waitingToStartTimer = 1f;
+        //private float _waitingToStartTimer = 1f;
         private float _countdownToStartTimer = 3f;
         private float _gamePlayingTimer;
         private float _gamePlayingTimerMaximum = 10f;
@@ -36,6 +36,7 @@ namespace KitchenSimulator.Management
         private void Start()
         {
             InputManager.Instance.OnPauseAction += OnPauseAction;
+            InputManager.Instance.OnInteractAction += OnInteractAction;
         }
 
         private void Update()
@@ -43,13 +44,14 @@ namespace KitchenSimulator.Management
             switch (_gameState)
             {
                 case GameState.WaitingToStart:
-                    _waitingToStartTimer -= Time.deltaTime;
+
+                    /*_waitingToStartTimer -= Time.deltaTime;
 
                     if (_waitingToStartTimer < 0f)
                     {
                         _gameState = GameState.CountdownToStart;
                         OnStateChanged?.Invoke(this, EventArgs.Empty);
-                    }
+                    }*/
 
                     break;
                 case GameState.CountdownToStart:
@@ -75,6 +77,15 @@ namespace KitchenSimulator.Management
                     break;
                 case GameState.GameOver:
                     break;
+            }
+        }
+        
+        private void OnInteractAction(object sender, EventArgs eventArgs)
+        {
+            if (_gameState == GameState.WaitingToStart)
+            {
+                _gameState = GameState.CountdownToStart;
+                OnStateChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

@@ -1,5 +1,6 @@
 using System;
 using KitchenSimulator.Core;
+using KitchenSimulator.Management;
 using KitchenSimulator.ScriptableObjects;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ namespace KitchenSimulator.CounterTops
             {
                 _spawnPlateTimer = 0f;
 
-                if (_platesSpawnedAmount < _platesSpawnedAmountMaximum)
+                if (GameManager.Instance.IsGamePlaying() && _platesSpawnedAmount < _platesSpawnedAmountMaximum)
                 {
                     _platesSpawnedAmount++;
                     OnPlateSpawned?.Invoke(this, EventArgs.Empty);

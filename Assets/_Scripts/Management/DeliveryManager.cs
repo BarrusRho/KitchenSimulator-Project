@@ -44,7 +44,7 @@ namespace KitchenSimulator.Management
             {
                 _spawnRecipeTimer = _spawnRecipeTimerMaximum;
 
-                if (_waitingRecipeSOList.Count < _waitingRecipesMaximum)
+                if (GameManager.Instance.IsGamePlaying() && _waitingRecipeSOList.Count < _waitingRecipesMaximum)
                 {
                     var randomRecipe = Random.Range(0, _recipeListSO.recipeSOList.Count);
                     var waitingRecipeSO = _recipeListSO.recipeSOList[randomRecipe];

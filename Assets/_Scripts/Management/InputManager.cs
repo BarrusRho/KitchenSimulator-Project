@@ -28,6 +28,8 @@ namespace KitchenSimulator.Management
         public event EventHandler OnInteractAlternateAction;
         public event EventHandler OnPauseAction;
 
+        public event EventHandler OnBindingRebound;
+
         private const string PLAYER_PREFS_BINDINGS = "InputBindings";
 
         private void Awake()
@@ -172,6 +174,7 @@ namespace KitchenSimulator.Management
                     
                     var savedInputs = _playerInputActions.SaveBindingOverridesAsJson();
                     PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, savedInputs);
+                    OnBindingRebound?.Invoke(this, EventArgs.Empty);
                 })
                 .Start();
         }
