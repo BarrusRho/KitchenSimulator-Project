@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using KitchenSimulator.Audio;
 using KitchenSimulator.Management;
 using TMPro;
 using UnityEngine;
@@ -9,7 +10,17 @@ namespace KitchenSimulator.UI
 {
     public class GameStartCountdownUI : MonoBehaviour
     {
+        private Animator _animator;
+
+        private const string NUMBER_POPUP = "NumberPopup";
+        
+        private int _previousCountdownNumber;
         [SerializeField] private TextMeshProUGUI _countdownText;
+
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+        }
 
         private void Start()
         {
@@ -20,7 +31,15 @@ namespace KitchenSimulator.UI
 
         private void Update()
         {
-            _countdownText.text = Mathf.Ceil(GameManager.Instance.GetCountdownToStartTimer()).ToString();
+            var countdownNumber = Mathf.CeilToInt(GameManager.Instance.GetCountdownToStartTimer());
+            _countdownText.text = countdownNumber.ToString();
+
+            if (_previousCountdownNumber != countdownNumber)
+            {
+                _previousCountdownNumber = countdownNumber;
+                _animator.SetTrigger(NUMBER_POPUP);
+                AudioManager.Instance.PlayCountdownSoundEffect();
+            }
         }
 
         private void OnStateChanged(object sender, EventArgs eventArgs)

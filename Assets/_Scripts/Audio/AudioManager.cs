@@ -61,6 +61,11 @@ namespace KitchenSimulator.Audio
         {
             PlaySoundEffectInArray(_audioClipsSO.footstepAudioClips, position, volume);
         }
+        
+        public void PlayCountdownSoundEffect()
+        {
+            PlaySoundEffectInArray(_audioClipsSO.warningAudioClips, Vector3.zero);
+        }
 
         private void OnRecipeSuccess(object sender, EventArgs eventArgs)
         {
