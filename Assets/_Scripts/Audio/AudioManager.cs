@@ -66,6 +66,11 @@ namespace KitchenSimulator.Audio
         {
             PlaySoundEffectInArray(_audioClipsSO.warningAudioClips, Vector3.zero);
         }
+        
+        public void PlayBurnWarningSoundEffect(Vector3 position)
+        {
+            PlaySoundEffectInArray(_audioClipsSO.warningAudioClips, position);
+        }
 
         private void OnRecipeSuccess(object sender, EventArgs eventArgs)
         {

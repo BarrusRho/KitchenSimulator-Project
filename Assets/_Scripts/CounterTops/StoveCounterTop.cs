@@ -215,5 +215,10 @@ namespace KitchenSimulator.CounterTops
 
             return null;
         }
+
+        public bool IsFried()
+        {
+            return _fryingState == FryingState.Fried;
+        }
     }
 }
