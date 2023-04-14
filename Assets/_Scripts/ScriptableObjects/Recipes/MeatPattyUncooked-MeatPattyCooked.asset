@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputIngredient: {fileID: 11400000, guid: 573ceee08b653ad46848265d64d6c146, type: 2}
   outputIngredient: {fileID: 11400000, guid: 82a64f87e69cc864ebf5f5423986734f, type: 2}
-  fryingProgressMaximum: 3
+  fryingProgressMaximum: 5
