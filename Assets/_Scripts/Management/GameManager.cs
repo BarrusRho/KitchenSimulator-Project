@@ -19,7 +19,7 @@ namespace KitchenSimulator.Management
         //private float _waitingToStartTimer = 1f;
         private float _countdownToStartTimer = 3f;
         private float _gamePlayingTimer;
-        private float _gamePlayingTimerMaximum = 10f;
+        private float _gamePlayingTimerMaximum = 90f;
         private bool _isGamePaused = false;
 
         public event EventHandler OnStateChanged;
